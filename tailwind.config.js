@@ -1,19 +1,33 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ["class"],
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        lake: {
-          950: '#081C2B',
-          900: '#0B2E45',
-          700: '#123F5C',
-          500: '#1C6E8C',
-          300: '#4E9BB8',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
-        foam: { 100: '#E8F1F2', 200: '#C9D9DC' },
-        catch: { gold: '#E8A33D' },
-        alert: { coral: '#E8654C' },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],

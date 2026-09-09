@@ -4,14 +4,14 @@ export default function CatchFeed({ catches }) {
   const reversed = catches.slice().reverse()
 
   return (
-    <div className="rounded-xl bg-lake-900/80 border border-lake-700 p-5 backdrop-blur">
-      <h2 className="text-lg font-display font-bold text-foam-100 mb-4 flex items-center gap-2">
-        <ClipboardList className="w-5 h-5 text-foam-200" /> Riwayat Tangkapan
+    <div className="rounded-xl bg-card border border-border p-5 backdrop-blur">
+      <h2 className="text-lg font-display font-bold text-card-foreground mb-4 flex items-center gap-2">
+        <ClipboardList className="w-5 h-5 text-muted-foreground" /> Riwayat Tangkapan
       </h2>
 
       <div className="space-y-2 max-h-64 overflow-y-auto custom-scrollbar pr-1">
         {reversed.length === 0 ? (
-          <p className="text-foam-200/50 text-sm text-center py-4">
+          <p className="text-muted-foreground text-sm text-center py-4">
             Belum ada tangkapan...
           </p>
         ) : (
@@ -20,21 +20,21 @@ export default function CatchFeed({ catches }) {
               key={item.id}
               className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-all ${
                 item.isBigCatch
-                  ? 'bg-alert-coral/10 border border-alert-coral/30'
-                  : 'bg-lake-700/30'
+                  ? 'bg-destructive/10 border border-destructive/30'
+                  : 'bg-muted/30'
               }`}
             >
-              <span className="flex items-center text-foam-200">
+              <span className="flex items-center text-muted-foreground">
                 {item.isBigCatch ? (
-                  <Flame className="w-4 h-4 text-alert-coral mr-1.5" />
+                  <Flame className="w-4 h-4 text-destructive mr-1.5" />
                 ) : (
-                  <Fish className="w-4 h-4 text-foam-200/70 mr-1.5" />
+                  <Fish className="w-4 h-4 text-muted-foreground mr-1.5" />
                 )}
-                <span className="font-medium text-foam-100">{item.botName}</span>
+                <span className="font-medium text-foreground">{item.botName}</span>
               </span>
 
               <span className={`font-bold font-display ${
-                item.isBigCatch ? 'text-alert-coral' : 'text-catch-gold'
+                item.isBigCatch ? 'text-destructive' : 'text-primary'
               }`}>
                 {item.berat} kg
               </span>

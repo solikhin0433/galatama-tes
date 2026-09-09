@@ -10,8 +10,8 @@ export default function ToastContainer({ toasts }) {
           key={toast.id}
           className={`rounded-lg px-4 py-3 shadow-lg animate-toast-in backdrop-blur text-sm font-medium flex items-start gap-3 ${
             toast.isBigCatch
-              ? 'bg-alert-coral/90 text-white'
-              : 'bg-lake-700/90 text-foam-100 border border-lake-500'
+              ? 'bg-destructive text-destructive-foreground'
+              : 'bg-card text-card-foreground border border-border'
           }`}
         >
           {toast.isBigCatch ? (

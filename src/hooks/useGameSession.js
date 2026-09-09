@@ -9,6 +9,11 @@ export function useGameSession(onCatch) {
   const [waktuSisa, setWaktuSisa] = useState(SESI_DURASI)
   const [tangkapanList, setTangkapanList] = useState([])
 
+  const onCatchRef = useRef(onCatch);
+  useEffect(() => {
+    onCatchRef.current = onCatch;
+  }, [onCatch]);
+
 // untuk menyimpan id dari set interval
   const timerRef = useRef(null)
   const catchTimeoutRef = useRef(null)
@@ -30,24 +35,17 @@ export function useGameSession(onCatch) {
       setTangkapanList((prev) => [...prev, tangkapanBaru])
 
       // Panggil callback untuk toast
-      if (onCatch) onCatch(tangkapanBaru)
+      if (onCatchRef.current) onCatchRef.current(tangkapanBaru)
 
       // Jadwalkan lagi
       jadwalkanTangkapan()
     }, interval)
-  }, [onCatch])
+  }, [])
 
   // Mulai sesi
   const mulaiSesi = useCallback(() => {
-    setSessionState((prev) => {
-      const next = transisi(prev, ACTION.START)
-      if (next === STATE.RUNNING) {
-        isRunningRef.current = true;
-        jadwalkanTangkapan()
-      }
-      return next
-    })
-  }, [jadwalkanTangkapan])
+    setSessionState((prev) => transisi(prev, ACTION.START))
+  }, [])
 
   // Reset sesi
   const resetSesi = useCallback(() => {
@@ -59,9 +57,12 @@ export function useGameSession(onCatch) {
     setTangkapanList([])
   }, [])
 
-  // countdown timer
+  // countdown timer & simulasi tangkapan
   useEffect(() => {
     if (sessionState !== STATE.RUNNING) return
+
+    isRunningRef.current = true;
+    jadwalkanTangkapan();
 
     timerRef.current = setInterval(() => {
       setWaktuSisa((prev) => {
@@ -81,7 +82,7 @@ export function useGameSession(onCatch) {
       clearInterval(timerRef.current)
       clearTimeout(catchTimeoutRef.current)
     }
-  }, [sessionState])
+  }, [sessionState, jadwalkanTangkapan])
 
   return {
     sessionState,
