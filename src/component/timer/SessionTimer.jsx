@@ -1,12 +1,10 @@
 import { STATE } from "../../lib/stateSession"
 
 export default function SessionTimer({ waktuSisa, sessionState }) {
-  // Format waktu: 65 → "1:05"
   const menit = Math.floor(waktuSisa / 60)
   const detik = String(waktuSisa % 60).padStart(2, '0')
   const display = `${menit}:${detik}`
 
-  // Label status
   const statusLabel = {
     [STATE.WAITING]: 'Menunggu...',
     [STATE.RUNNING]: 'Sesi Berjalan',
