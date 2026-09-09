@@ -1,8 +1,10 @@
+import { Trophy, Fish } from 'lucide-react'
+
 export default function Leaderboard({ entries }) {
   return (
     <div className="rounded-xl bg-lake-900/80 border border-lake-700 p-5 backdrop-blur">
-      <h2 className="text-lg font-display font-bold text-foam-100 mb-4">
-        🏆 Leaderboard
+      <h2 className="text-lg font-display font-bold text-foam-100 mb-4 flex items-center gap-2">
+        <Trophy className="w-5 h-5 text-catch-gold" /> Leaderboard
       </h2>
 
       <div className="space-y-2">
@@ -30,8 +32,8 @@ export default function Leaderboard({ entries }) {
             </div>
 
             <div className="flex items-center gap-4 text-sm">
-              <span className="text-foam-200/70">
-                {entry.jumlahTangkapan} 🐟
+              <span className="flex items-center gap-1 text-foam-200/70">
+                {entry.jumlahTangkapan} <Fish className="w-4 h-4" />
               </span>
               <span className="text-foam-100 font-bold font-display min-w-[60px] text-right">
                 {entry.totalBerat} kg

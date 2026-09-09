@@ -12,6 +12,7 @@ export function useGameSession(onCatch) {
 // untuk menyimpan id dari set interval
   const timerRef = useRef(null)
   const catchTimeoutRef = useRef(null)
+  const isRunningRef = useRef(false) 
 
   // untuk hitung ulang setiap render
   const leaderboard = calculateLeaderboard(tangkapanList)
@@ -22,6 +23,9 @@ export function useGameSession(onCatch) {
     const interval = generateIntervalBerikutnya()
 
     catchTimeoutRef.current = setTimeout(() => {
+      // Cek apakah sesi masih berjalan
+      if (!isRunningRef.current) return;
+
       const tangkapanBaru = generateTangkapan()
       setTangkapanList((prev) => [...prev, tangkapanBaru])
 
@@ -38,6 +42,7 @@ export function useGameSession(onCatch) {
     setSessionState((prev) => {
       const next = transisi(prev, ACTION.START)
       if (next === STATE.RUNNING) {
+        isRunningRef.current = true;
         jadwalkanTangkapan()
       }
       return next
@@ -46,6 +51,7 @@ export function useGameSession(onCatch) {
 
   // Reset sesi
   const resetSesi = useCallback(() => {
+    isRunningRef.current = false;
     clearInterval(timerRef.current)
     clearTimeout(catchTimeoutRef.current)
     setSessionState(STATE.WAITING)
@@ -53,13 +59,14 @@ export function useGameSession(onCatch) {
     setTangkapanList([])
   }, [])
 
-  // Effect: countdown timer
+  // countdown timer
   useEffect(() => {
     if (sessionState !== STATE.RUNNING) return
 
     timerRef.current = setInterval(() => {
       setWaktuSisa((prev) => {
         if (prev <= 1) {
+          isRunningRef.current = false;
           clearInterval(timerRef.current)
           clearTimeout(catchTimeoutRef.current)
           setSessionState(STATE.ENDED)
@@ -70,6 +77,7 @@ export function useGameSession(onCatch) {
     }, 1000)
 
     return () => {
+      isRunningRef.current = false;
       clearInterval(timerRef.current)
       clearTimeout(catchTimeoutRef.current)
     }
